@@ -6,7 +6,7 @@ from src.api.routers import organizations, buildings, activities
 from src.core.database import engine, Base
 from src.core.logging import setup_logging
 from src.core.config import settings
-
+from src.middleware import APIKeyMiddleware
 
 setup_logging()
 
@@ -40,6 +40,9 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan
 )
+
+# Include middleware
+app.add_middleware(APIKeyMiddleware)
 
 # Include routers
 app.include_router(organizations.router)
